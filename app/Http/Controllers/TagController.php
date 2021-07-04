@@ -18,6 +18,10 @@ class TagController extends Controller
         return Tag::All();
     }
 
+    public function show($id)
+    {
+        return Tag::find($id);
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -69,7 +73,6 @@ class TagController extends Controller
         
         return $tags;
     }
-
 
     /**
      * Show the form for editing the specified resource.

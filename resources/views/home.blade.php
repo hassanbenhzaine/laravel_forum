@@ -28,7 +28,7 @@
     <h1>Popular tags</h1>
         <ul>
             @foreach ($tags as $tag)
-                <li>{{$tag->name}}</li>
+                <li><a href="{{url('/tag/'.$tag->id)}}">{{$tag->name}}</a></li>
             @endforeach
         </ul>
 

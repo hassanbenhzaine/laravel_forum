@@ -40,6 +40,17 @@ class PageController extends Controller
         return view('user', ['user' => $user_result]);
     }
 
+    public function tag($id)
+    {
+        $tag = new TagController;
+        $tag_result = $tag->show($id);
+
+        $threads = new ThreadController;
+        $threads_result = $threads->threadsWithTag($id);
+
+        return view('tag', ['threads' => $threads_result, 'tag' => $tag_result]);
+    }
+
 
     public function store(Request $request)
     {

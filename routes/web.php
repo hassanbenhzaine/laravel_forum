@@ -20,9 +20,7 @@ Route::get('/thread/{id?}', [PageController::class, 'thread']);
 Route::post('/thread/new', [ApiController::class, 'storeThread']);
 Route::post('/answer/new/{id}', [ApiController::class, 'storeAnswer']);
 Route::get('/user/{id}', [PageController::class, 'user']);
-
-Route::get('/tags/{id}', [ThreadController::class, 'tagsForSpecificThread']);
-// Route::get('/tag/{id}', [PageController::class, 'user']);
+Route::get('/tag/{id}', [PageController::class, 'tag']);
 
 
 Route::get('/dashboard', function () {
