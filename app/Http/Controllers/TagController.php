@@ -62,13 +62,14 @@ class TagController extends Controller
         return $tags;
     }
 
-    public function popularTags()
+    public function popularTags($limit)
     {
         $tags = DB::table('thread_tags')
         ->select('tags.name', 'tags.id', DB::raw('count(thread_tags.tag_id) as count'))
         ->join('tags', 'thread_tags.tag_id', '=', 'tags.id')
         ->groupBy('thread_tags.tag_id')
         ->orderByDesc('count')
+        ->limit($limit)
         ->get();
         
         return $tags;

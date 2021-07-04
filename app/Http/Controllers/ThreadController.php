@@ -60,11 +60,11 @@ class ThreadController extends Controller
         return $threads;
     }
 
-    public function threadsWithUsersInfo(){
+    public function threadsWithUsersInfo($limit){
         $answers = DB::table('threads')
         ->select('threads.id AS threadId', 'users.id AS userId', 'threads.title', 'threads.created_at', 'threads.content', 'users.name' )
         ->join('users', 'threads.user_id', '=', 'users.id')
-        ->get();
+        ->paginate($limit);
 
         return $answers;
     }

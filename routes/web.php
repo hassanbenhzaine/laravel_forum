@@ -17,8 +17,8 @@ use App\Http\Controllers\ApiController;
 
 Route::get('/', [PageController::class, 'home'])->name('home');
 Route::get('/thread/{id?}', [PageController::class, 'thread']);
-Route::post('/thread/new', [ApiController::class, 'storeThread']);
-Route::post('/answer/new/{id}', [ApiController::class, 'storeAnswer']);
+Route::post('/thread/new', [ThreadController::class, 'store']);
+Route::post('/answer/new/{id}', [AnswerController::class, 'store']);
 Route::get('/user/{id}', [PageController::class, 'user']);
 Route::get('/tag/{id}', [PageController::class, 'tag']);
 

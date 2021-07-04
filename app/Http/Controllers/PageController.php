@@ -14,10 +14,10 @@ class PageController extends Controller
     public function home()
     {
         $threads = new ThreadController;
-        $threads_result = $threads->threadsWithUsersInfo();
+        $threads_result = $threads->threadsWithUsersInfo(10);
 
         $tags = new TagController;
-        $tags_result = $tags->popularTags();
+        $tags_result = $tags->popularTags(10);
 
         return view('home', ['threads' => $threads_result, 'tags' => $tags_result]);
     }
