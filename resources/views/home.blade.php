@@ -2,6 +2,7 @@
 
 @section('body')
     
+    {{-- add new thread --}}
     @auth
     <form action="{{url('thread/new')}}" method="post">
         <input type="text" name="title" placeholder="Title">
@@ -10,6 +11,13 @@
         {{csrf_field()}}
     </form>
     @endauth
+
+    {{-- search bar --}}
+    <form action="{{url('search')}}" method="GET">
+        <input type="text" name="q" placeholder="what you looking for?">
+        <button type="submit">Search</button>
+        {{csrf_field()}}
+    </form>
 
     @foreach ($threads as $thread)
         <h1><a href="{{url('thread').'/'.$thread->threadId}}">{{$thread->title}}</a></h1>
@@ -24,11 +32,12 @@
         <h4>by <a href="{{url('user/'.$thread->userId)}}">{{$thread->name}}</a></h4>
     @endforeach
 
+    {{$threads->links('pagination')}}
     
     <h1>Popular tags</h1>
         <ul>
             @foreach ($tags as $tag)
-                <li><a href="{{url('/tag/'.$tag->id)}}">{{$tag->name}}</a></li>
+                <li><a href="{{url('/tag/'.$tag->name)}}">{{$tag->name}}</a></li>
             @endforeach
         </ul>
 

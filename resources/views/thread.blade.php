@@ -10,7 +10,7 @@
         $tagsForThread = App\Http\Controllers\TagController::TagsForThread($thread->id)
         @endphp
         @foreach ($tagsForThread as $tag)
-            <h3 style="display: inline">{{$tag->name}}</h3>
+            <h3 style="display: inline"><a href="{{url('tag/'.$tag->name)}}">{{$tag->name}}</a></h3>
         @endforeach
         @foreach ($answers as $answer)
             <h5>{{$answer->content}}</h3>    

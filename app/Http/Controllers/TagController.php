@@ -18,9 +18,9 @@ class TagController extends Controller
         return Tag::All();
     }
 
-    public function show($id)
+    public function show($name)
     {
-        return Tag::find($id);
+        return Tag::where('name', $name)->first();
     }
 
     /**

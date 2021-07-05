@@ -48,25 +48,35 @@ class ThreadController extends Controller
         return true;
     }
 
-    public function threadsWithTag($id){
+    public function threadsWithTagByName($name){
         $threads = DB::table('thread_tags')
         ->select('users.name AS userName' , 'tags.name', 'threads.id', 'threads.user_id', 'threads.title', 'threads.content', 'threads.user_id', 'threads.created_at', 'tags.name')
         ->join('tags', 'thread_tags.tag_id', '=', 'tags.id')
         ->join('threads', 'thread_tags.thread_id', '=', 'threads.id')
         ->join('users', 'threads.user_id', '=', 'users.id')
-        ->where('thread_tags.tag_id', '=', $id)
+        ->where('tags.name', '=', $name)
         ->get();
         
         return $threads;
     }
 
     public function threadsWithUsersInfo($limit){
-        $answers = DB::table('threads')
+        $threads = DB::table('threads')
         ->select('threads.id AS threadId', 'users.id AS userId', 'threads.title', 'threads.created_at', 'threads.content', 'users.name' )
         ->join('users', 'threads.user_id', '=', 'users.id')
         ->paginate($limit);
 
-        return $answers;
+        return $threads;
+    }
+
+    public function search($query, $limit){
+        $threads = DB::table('threads')
+        ->select('threads.id AS threadId', 'users.id AS userId', 'threads.title', 'threads.created_at', 'threads.content', 'users.name' )
+        ->join('users', 'threads.user_id', '=', 'users.id')
+        ->where('threads.title', 'like', '%'.$query.'%')
+        ->paginate($limit);
+
+        return $threads;
     }
 
     /**

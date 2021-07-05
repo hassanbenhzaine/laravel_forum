@@ -7,6 +7,8 @@ use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TagController;
 use Illuminate\Http\Request;
+use phpDocumentor\Reflection\PseudoTypes\True_;
+use PhpParser\Node\Expr\Isset_;
 
 class PageController extends Controller
 {
@@ -40,17 +42,25 @@ class PageController extends Controller
         return view('user', ['user' => $user_result]);
     }
 
-    public function tag($id)
+    public function tag($name)
     {
         $tag = new TagController;
-        $tag_result = $tag->show($id);
+        $tag_result = $tag->show($name);
 
         $threads = new ThreadController;
-        $threads_result = $threads->threadsWithTag($id);
+        $threads_result = $threads->threadsWithTagByName($name);
 
         return view('tag', ['threads' => $threads_result, 'tag' => $tag_result]);
     }
 
+    public function search(Request $request)
+    {
+        $query = $request->all()['q'];
+        $threads = new ThreadController;
+        $threads_result = $threads->search($query, 10);
+
+        return view('search', ['threads' => $threads_result]);        
+    }
 
     public function store(Request $request)
     {

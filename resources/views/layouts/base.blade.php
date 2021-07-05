@@ -18,8 +18,9 @@
                     <a href="{{ route('register') }}">Register</a>
                 @endif
             @endauth
-    @endif
+        @endif
 
-       @yield('body')
+        @yield('search_bar')
+        @yield('body')
     </body>
 </html>
