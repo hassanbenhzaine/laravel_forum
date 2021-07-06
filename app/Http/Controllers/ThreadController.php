@@ -121,6 +121,6 @@ class ThreadController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Thread::find($id)->delete();
     }
 }

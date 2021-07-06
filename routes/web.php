@@ -16,9 +16,11 @@ use App\Http\Controllers\ApiController;
 */
 
 Route::get('/', [PageController::class, 'home'])->name('home');
-Route::get('/thread/{id?}', [PageController::class, 'thread']);
+Route::get('/thread', [PageController::class, 'thread']);
+Route::post('/thread/delete', [ApiController::class, 'deleteThread']);
 Route::post('/thread/new', [ApiController::class, 'storeThread']);
-Route::post('/answer/new/{id}', [ApiController::class, 'storeAnswer']);
+Route::post('/answer/delete', [ApiController::class, 'deleteAnswer']);
+Route::post('/answer/new', [ApiController::class, 'storeAnswer']);
 Route::get('/search', [PageController::class, 'search']);
 Route::get('/user/{id}', [PageController::class, 'user']);
 Route::get('/tag/{name}', [PageController::class, 'tag']);

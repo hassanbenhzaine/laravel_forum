@@ -20,7 +20,7 @@ class CreateThreadsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
         });
 
         Schema::create('tags', function (Blueprint $table) {
@@ -35,8 +35,8 @@ class CreateThreadsTable extends Migration
             $table->unsignedBigInteger('tag_id');
             $table->timestamps();
 
-            $table->foreign('thread_id')->references('id')->on('threads');
-            $table->foreign('tag_id')->references('id')->on('tags');
+            $table->foreign('thread_id')->references('id')->on('threads')->cascadeOnDelete();
+            $table->foreign('tag_id')->references('id')->on('tags')->cascadeOnDelete();
         });
 
         Schema::create('answers', function (Blueprint $table) {
@@ -78,11 +78,11 @@ class CreateThreadsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('threads');
-        Schema::dropIfExists('tags');
-        Schema::dropIfExists('answers');
-        Schema::dropIfExists('thread_tags');
-        Schema::dropIfExists('answer_reactions');
-        Schema::dropIfExists('thread_reactions');
+        // Schema::dropIfExists('thread_tags');
+        // Schema::dropIfExists('answer_reactions');
+        // Schema::dropIfExists('thread_reactions');
+        // Schema::dropIfExists('threads');
+        // Schema::dropIfExists('tags');
+        // Schema::dropIfExists('answers');
     }
 }

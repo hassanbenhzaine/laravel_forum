@@ -21,12 +21,32 @@ class ApiController extends Controller
         return redirect('/');
     }
 
-    public function storeAnswer(Request $request, $id)
-    {
-        $answer = new AnswerController;
-        $answer->store($request,$id);
+    public function deleteThread(Request $request){
 
-        return redirect('/thread/'.$id);
+        $threadId = $request->all()['id'];
+        
+        $thread = new ThreadController;
+        $thread->destroy($threadId);
+
+        return redirect('/');
+    }
+
+    public function storeAnswer(Request $request)
+    {
+        $threadId = $request->All()['id'];
+        $answer = new AnswerController;
+        $answer->store($request);
+
+        return redirect('/thread?id='.$threadId);
+    }
+
+    public function deleteAnswer(Request $request)
+    {
+        $answerId = $request->All()['id'];
+        $answer = new AnswerController;
+        $answer->destroy($answerId);
+
+        return redirect('/');
     }
 
     /**

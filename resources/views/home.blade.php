@@ -20,7 +20,7 @@
     </form>
 
     @foreach ($threads as $thread)
-        <h1><a href="{{url('thread').'/'.$thread->threadId}}">{{$thread->title}}</a></h1>
+        <h1><a href="{{url('thread').'?id='.$thread->threadId}}">{{$thread->title}}</a></h1>
         <h2>{{$thread->content}}</h2>
         @php
         $tagsForThread = App\Http\Controllers\TagController::TagsForThread($thread->threadId)
@@ -30,16 +30,23 @@
         @endforeach
         <h4>{{$thread->created_at}}</h4>
         <h4>by <a href="{{url('user/'.$thread->userId)}}">{{$thread->name}}</a></h4>
+        <form action="{{url('thread/delete').'?id='.$thread->threadId}}" method="post">
+            {{ csrf_field() }}
+            <button type="submit">Delete</button>
+        </form>
     @endforeach
 
     {{$threads->links('pagination')}}
     
+    {{-- Popular tags --}}
+    @if (count($tags) > 0)
     <h1>Popular tags</h1>
         <ul>
             @foreach ($tags as $tag)
                 <li><a href="{{url('/tag/'.$tag->name)}}">{{$tag->name}}</a></li>
             @endforeach
         </ul>
+    @endif
 
 
 @endsection

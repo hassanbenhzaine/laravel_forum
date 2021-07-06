@@ -45,12 +45,13 @@ class AnswerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store($request, $id)
+    public function store($request)
     {
+        $thread_id = $request->all()['id'];
         $answer = new Answer;
         $answer->content = $request->content;
         $answer->user_id = Auth::id();
-        $answer->thread_id = $id;
+        $answer->thread_id = $thread_id;
         $answer->save();
 
         return true;
@@ -98,6 +99,6 @@ class AnswerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Answer::find($id)->delete();
     }
 }

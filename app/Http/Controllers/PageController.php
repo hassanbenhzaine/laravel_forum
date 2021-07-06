@@ -7,8 +7,6 @@ use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TagController;
 use Illuminate\Http\Request;
-use phpDocumentor\Reflection\PseudoTypes\True_;
-use PhpParser\Node\Expr\Isset_;
 
 class PageController extends Controller
 {
@@ -24,13 +22,14 @@ class PageController extends Controller
         return view('home', ['threads' => $threads_result, 'tags' => $tags_result]);
     }
 
-    public function thread($id, $else=1)
+    public function thread(Request $request)
     {
+        $threadId = $request->all()['id'];
         $thread = new ThreadController;
-        $thread_result = $thread->show($id);
+        $thread_result = $thread->show($threadId);
 
         $answers = new AnswerController;
-        $answers_result = $answers->answerWithUserInfo($id);
+        $answers_result = $answers->answerWithUserInfo($threadId);
         
         return view('thread', ['thread' => $thread_result, 'answers' => $answers_result]);
     }
