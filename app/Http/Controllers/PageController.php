@@ -19,19 +19,60 @@ class PageController extends Controller
         $tags = new TagController;
         $tags_result = $tags->popularTags(10);
 
+        // $threadViews = $threads->threadsWithUsersInfo(10);
+
         return view('home', ['threads' => $threads_result, 'tags' => $tags_result]);
+    }
+
+    public function newThread(){
+        $categories = new CategoryController;
+        $categories_result = $categories->index();
+
+        return view('new_thread', ['categories' =>  $categories_result]);
+    }
+
+    public function categories(){
+        $categories = new CategoryController;
+        $categories_result = $categories->categoriesWithCount(10);
+
+        return view('categories', ['categories' => $categories_result]);
+    }
+
+    public function category($name){
+        $threads = new ThreadController;
+        $threads_result = $threads->threadsWithCategoryName($name, 10);
+
+        return view('category', ['threads' => $threads_result]);
     }
 
     public function thread(Request $request)
     {
         $threadId = $request->all()['id'];
         $thread = new ThreadController;
-        $thread_result = $thread->show($threadId);
+        $thread_result = $thread->threadWithUserInfo($threadId);
+
+        $thread_privilege = $thread->checkThreadPrivilege($threadId);
+
+        $privilege['thread'] = $thread_privilege;
 
         $answers = new AnswerController;
         $answers_result = $answers->answerWithUserInfo($threadId);
-        
-        return view('thread', ['thread' => $thread_result, 'answers' => $answers_result]);
+ 
+        return view('thread', ['thread' => $thread_result, 'answers' => $answers_result, 'privilege' => $privilege]);
+    }
+
+    public function editThread(Request $request){
+
+        $threadId = $request->all()['id'];
+
+        $categories = new CategoryController;
+        $categories_result = $categories->index();
+
+        $thread = new ThreadController;
+        $thread_result = $thread->show($threadId);
+
+        return view('edit_thread', ['categories' =>  $categories_result, 'thread' => $thread_result]);
+
     }
 
     public function user($id){

@@ -39,9 +39,23 @@ class TagController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store($tagsList)
     {
-        //
+
+        for($i=0; $i < count($tagsList); $i++){
+        
+            $condition = DB::table('tags')->where('name', $tagsList[$i])->first();
+
+            global $store_result;
+            if(empty($condition->name)){
+                $tags = new Tag;
+                $tags->name = $tagsList[$i];
+                $tags->save();
+                $store_result[] = $tags;
+            }
+            
+        }
+        echo var_dump($store_result);
     }
 
     /**

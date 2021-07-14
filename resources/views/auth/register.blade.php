@@ -1,59 +1,68 @@
-<x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
+<!doctype html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8">
+    <title>{{ config('app.name', 'Laravel') }}</title>
+    <meta name="keywords" content="HTML5 Template">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="description" content="Forum - Responsive HTML5 Template">
+    <meta name="author" content="Forum">
+    <link rel="shortcut icon" href="favicon/favicon.ico">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<!-- tt-mobile menu -->
+<nav class="panel-menu" id="mobile-menu">
+    <ul>
 
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
-
-        <form method="POST" action="{{ route('register') }}">
-            @csrf
-
-            <!-- Name -->
-            <div>
-                <x-label for="name" :value="__('Name')" />
-
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
+    </ul>
+    <div class="mm-navbtn-names">
+        <div class="mm-closebtn">
+            Close
+            <div class="tt-icon">
+                <svg>
+                  <use xlink:href="#icon-cancel"></use>
+                </svg>
             </div>
-
-            <!-- Email Address -->
-            <div class="mt-4">
-                <x-label for="email" :value="__('Email')" />
-
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
+        </div>
+        <div class="mm-backbtn">Back</div>
+    </div>
+</nav>
+<main id="tt-pageContent" class="tt-offset-none">
+    <div class="container">
+        <div class="tt-loginpages-wrapper">
+            <div class="tt-loginpages">
+                <form class="form-default" action="{{ route('register') }}" method="POST">
+                    {{ csrf_field() }}
+                    <div class="form-group">
+                        <label for="loginName">Name</label>
+                        <input type="text" name="name" class="form-control" id="loginName" placeholder="Name" required autofocus>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginEmail">Email</label>
+                        <input type="email" name="email" class="form-control" id="loginEmail" placeholder="example@domain.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" name="password" class="form-control" id="loginPassword" placeholder="************" required autocomplete="new-password">
+                    </div>
+                    <div class="form-group">
+                        <label for="password_confirmation">Password Confirmation</label>
+                        <input type="password" name="password_confirmation" class="form-control" placeholder="************" id="password_confirmation" required>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-secondary btn-block">Signup</button>
+                    </div>
+                    <p>Already registered? <a href="{{ route('login') }}" class="tt-underline">Login here</a></p>
+                </form>
             </div>
+        </div>
+    </div>
+</main>
+<script src="js/bundle.js"></script>
+</body>
+</html>
 
-            <!-- Password -->
-            <div class="mt-4">
-                <x-label for="password" :value="__('Password')" />
 
-                <x-input id="password" class="block mt-1 w-full"
-                                type="password"
-                                name="password"
-                                required autocomplete="new-password" />
-            </div>
-
-            <!-- Confirm Password -->
-            <div class="mt-4">
-                <x-label for="password_confirmation" :value="__('Confirm Password')" />
-
-                <x-input id="password_confirmation" class="block mt-1 w-full"
-                                type="password"
-                                name="password_confirmation" required />
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
-                    {{ __('Already registered?') }}
-                </a>
-
-                <x-button class="ml-4">
-                    {{ __('Register') }}
-                </x-button>
-            </div>
-        </form>
-    </x-auth-card>
-</x-guest-layout>

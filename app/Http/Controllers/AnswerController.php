@@ -22,7 +22,7 @@ class AnswerController extends Controller
 
     public function answerWithUserInfo($id){
         $answers = DB::table('answers')
-                ->select('users.id', 'answers.content', 'answers.created_at', 'users.name')
+                ->select('answers.id AS answerId', 'users.id AS userId', 'answers.content', 'answers.created_at', 'users.name')
                 ->join('users', 'answers.user_id', '=', 'users.id')
                 ->where('answers.thread_id', '=', $id)
                 ->get();
@@ -89,6 +89,17 @@ class AnswerController extends Controller
     public function update(Request $request, $id)
     {
         //
+    }
+
+    public static function checkAnswerPrivilege($threadId, $answerId){
+        $check = DB::table('answers')
+        ->select('answers.id')
+        ->where('answers.thread_id', '=', $threadId)
+        ->where('answers.id', '=', $answerId)
+        ->where('answers.user_id', '=', Auth::id())
+        ->get();
+        
+        return $check;
     }
 
     /**

@@ -15,8 +15,29 @@ class ApiController extends Controller
      */
     public function storeThread(Request $request)
     {
+        $store_thread = new ThreadController;
+        $store_thread_result = $store_thread->store($request);
+
+        $thread_category = new ThreadCategoryController;
+        $thread_category->store($request, $store_thread_result);
+
+        $request_tags = array_map('trim', explode(',', $request->tags));
+        $tags = new TagController;
+        $store_tags_result = $tags->store($request_tags);
+
+        // $thread_tags = new ThreadTagController;
+        // $thread_tags->store($store_thread_result, $store_tags_result);
+
+
+
+        return redirect('/thread?id='.$store_thread_result->id);
+    }
+
+    public function editThread(Request $request){
+        $threadId = $request->all()['id'];
+
         $thread = new ThreadController;
-        $thread->store($request);
+        $thread->edit($threadId, $request);
 
         return redirect('/');
     }
@@ -43,10 +64,11 @@ class ApiController extends Controller
     public function deleteAnswer(Request $request)
     {
         $answerId = $request->All()['id'];
+        $threadId = $request->All()['thread'];
         $answer = new AnswerController;
         $answer->destroy($answerId);
 
-        return redirect('/');
+        return redirect('/thread?id='.$threadId);
     }
 
     /**
